@@ -8,13 +8,29 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 const encryptedMarker = "antiGITHUB.txt"
 
+var exeName string
+
 func main() {
 	//scan_files.ScanCurrentFolder()
+	exePath, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exeName = filepath.Base(exePath)
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	// handle err
+	fmt.Println("This script is executed in this directory:")
+	fmt.Println(path)
+
 	folderPath := "."
 	fmt.Println("Checking if folder is already encrypted...")
 	xd, _ := os.Stat(folderPath + "/" + encryptedMarker)
@@ -121,7 +137,7 @@ func enc_dec_path(folderPath string, key []byte, iv []byte, isGitAllowed bool) e
 
 	for _, file := range files {
 		if !file.IsDir() {
-			if file.Name() == "README.md" || file.Name() == "cry" {
+			if file.Name() == "README.md" || file.Name() == exeName {
 				continue
 			}
 			err := enc_dec_file(folderPath+"/"+file.Name(), key, iv, isGitAllowed)

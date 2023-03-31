@@ -3,7 +3,7 @@ this ./cry files encryps everything except
 - /node_modules (folder)
 - /.git (folder) (it renames it to enc.git to avoid pushing decrypted files)
 - /public (folder)
-- ./cry (file executable)
+- ./cry-name (file executable name)
 
 Only tested on ubuntu.
 
